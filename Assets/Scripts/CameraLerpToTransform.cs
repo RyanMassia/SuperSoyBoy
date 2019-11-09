@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraLerpToTransform : MonoBehaviour {
-
-    // 1 
+public class CameraLerpToTransform : MonoBehaviour
+{
+   
     public Transform camTarget; //camera target
     public float trackingSpeed; //speed at which camera tracks
     public float minX;  
