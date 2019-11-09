@@ -41,6 +41,7 @@ public class Hazard : MonoBehaviour
             spriteRenderer.sprite = hitSprite;
             // 4  kills the player and destroys it
             Destroy(coll.gameObject);
+            GameManager.instance.RestartLevel(1.25f);
         }
     } 
 }
