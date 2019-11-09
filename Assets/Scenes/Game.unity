@@ -2232,22 +2232,17 @@ PrefabInstance:
     - target: {fileID: 643447473864320409, guid: 9e7bd9038bcc60747894b468395b5a91,
         type: 3}
       propertyPath: m_Name
-      value: buzzsaw
-      objectReference: {fileID: 0}
-    - target: {fileID: 643447473864320409, guid: 9e7bd9038bcc60747894b468395b5a91,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
+      value: Buzzsaw
       objectReference: {fileID: 0}
     - target: {fileID: 643447473864320421, guid: 9e7bd9038bcc60747894b468395b5a91,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.18
+      value: 0.67
       objectReference: {fileID: 0}
     - target: {fileID: 643447473864320421, guid: 9e7bd9038bcc60747894b468395b5a91,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.89
       objectReference: {fileID: 0}
     - target: {fileID: 643447473864320421, guid: 9e7bd9038bcc60747894b468395b5a91,
         type: 3}
@@ -2293,11 +2288,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 643447473864320423, guid: 9e7bd9038bcc60747894b468395b5a91,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e7bd9038bcc60747894b468395b5a91, type: 3}
