@@ -20,6 +20,7 @@ public class SoyBoyController : MonoBehaviour
     public float jumpDurationThreshold = 0.25f;
     private float jumpDuration;
     public float airAccel = 3f;
+    public float jump = 14f;
 
     void Awake() // starts up these componets when object is created!
     {
@@ -98,10 +99,26 @@ public class SoyBoyController : MonoBehaviour
         {
             xVelocity = rb.velocity.x;
         }
+
+        var yVelocity = 0f;
+        if (PlayerIsTouchingGroundOrWall() && input.y == 1)
+        {
+            yVelocity = jump;
+        }
+        else
+        {
+            yVelocity = rb.velocity.y;
+        }
+
         // 3    adds firce which is x times speed - velocity 
         rb.AddForce(new Vector2(((input.x * speed) - rb.velocity.x) * acceleration, 0));
         // 4   when not moving velocity is reset to 0
-        rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+        rb.velocity = new Vector2(xVelocity, yVelocity);
+        if (IsWallToLeftOrRight() && !PlayerIsOnGround() && input.y == 1)
+        {
+            rb.velocity = new Vector2(-GetWallDirection() * speed * 0.75f, rb.velocity.y);
+        }
+
 
         if (isJumping && jumpDuration < jumpDurationThreshold)
         {
@@ -125,4 +142,50 @@ public class SoyBoyController : MonoBehaviour
             return false;
         }
     }
+
+    public bool IsWallToLeftOrRight()
+    {   // 1  
+        bool wallOnleft = Physics2D.Raycast(new Vector2(transform.position.x - width, transform.position.y),-Vector2.right, rayCastLengthCheck);
+        bool wallOnRight = Physics2D.Raycast(new Vector2(transform.position.x + width, transform.position.y), Vector2.right, rayCastLengthCheck);
+        // 2 if ray cast hits anything returns true otherwise false  
+        if (wallOnleft || wallOnRight)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool PlayerIsTouchingGroundOrWall()
+    { if (PlayerIsOnGround() || IsWallToLeftOrRight())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public int GetWallDirection()
+    {
+        bool isWallLeft = Physics2D.Raycast(new Vector2(transform.position.x - width, transform.position.y), -Vector2.right, rayCastLengthCheck);
+        bool isWallRight = Physics2D.Raycast(new Vector2(transform.position.x + width, transform.position.y), Vector2.right, rayCastLengthCheck);
+        if (isWallLeft)
+        {
+            return -1;
+        }
+        else if (isWallRight)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+
 }
