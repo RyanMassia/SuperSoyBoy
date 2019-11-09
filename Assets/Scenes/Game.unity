@@ -1082,21 +1082,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1831972054879324939, guid: 32ce4749efb89b4499476cba2eafacfb,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 215799073
-      objectReference: {fileID: 0}
-    - target: {fileID: 1831972054879324939, guid: 32ce4749efb89b4499476cba2eafacfb,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1831972054879324940, guid: 32ce4749efb89b4499476cba2eafacfb,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32ce4749efb89b4499476cba2eafacfb, type: 3}
 --- !u!1001 &7378060490028124250
@@ -1165,16 +1150,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7378060489373865734, guid: 8b855af396d01b9418acca65c9cc27c1,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7378060489373865733, guid: 8b855af396d01b9418acca65c9cc27c1,
-        type: 3}
-      propertyPath: m_Simulated
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b855af396d01b9418acca65c9cc27c1, type: 3}
