@@ -19,6 +19,7 @@ public class SoyBoyController : MonoBehaviour
     private float height;
     public float jumpDurationThreshold = 0.25f;
     private float jumpDuration;
+    public float airAccel = 3f;
 
     void Awake() // starts up these componets when object is created!
     {
@@ -68,16 +69,28 @@ public class SoyBoyController : MonoBehaviour
                 isJumping = true;
             }
         }
-        if (jumpDuration > jumpDurationThreshold) input.y = 0f;
+        if (jumpDuration > jumpDurationThreshold)
+        {
+            input.y = 0f;
+        }
     }
 
     void FixedUpdate()
-    {  
+    {
         // 1  assigns acceleration
-        var acceleration = accel;
+        var acceleration = 0f;
+        if (PlayerIsOnGround())
+        {
+            acceleration = accel;
+        }
+        else
+        {
+            acceleration = airAccel;
+        }
         var xVelocity = 0f;
+
         // 2   if not moving sets movement to 0  
-        if (input.x == 0)
+        if (PlayerIsOnGround() && input.x == 0)
         {
             xVelocity = 0f;
         }
