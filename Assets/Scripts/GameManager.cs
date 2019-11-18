@@ -11,6 +11,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GameManager : MonoBehaviour
 {
     public string playerName; // tracks players name
+    public GameObject buttonPrefab;
+    private string selectedLevel;
     public static GameManager instance;
 
     void Awake()
@@ -108,5 +110,11 @@ public class GameManager : MonoBehaviour
         {
             DisplayPreviousTimes();
         }
+    }
+
+    private void SetLevelName(string levelFilePath)
+    {
+        selectedLevel = levelFilePath;
+        SceneManager.LoadScene("Game");
     }
 }
