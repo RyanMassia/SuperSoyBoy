@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public string playerName; // tracks players name
     public static GameManager instance;
 
     void Awake()
@@ -20,18 +20,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // Use this for initialization
+    void Start () {
+	
+	}
 
     public void RestartLevel(float delay)
     {
@@ -44,5 +36,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-
+    // Update is called once per frame
+    void Update () {
+	
+	}
 }
