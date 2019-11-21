@@ -47,10 +47,13 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-	
-	}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
 
     public List<PlayerTimeEntry> LoadPreviousTimes()
     {
@@ -82,7 +85,8 @@ public class GameManager : MonoBehaviour
         newTime.time = time;
         // 5   
         var bFormatter = new BinaryFormatter();
-        var filePath = Application.persistentDataPath + "/" + playerName + "_times.dat";
+        var levelName = Path.GetFileName(selectedLevel);
+        var filePath = Application.persistentDataPath + "/" + playerName + "_" + levelName + "_times.dat";
         using (var file = File.Open(filePath, FileMode.Create))
         {
             times.Add(newTime);
@@ -92,16 +96,18 @@ public class GameManager : MonoBehaviour
 
     public void DisplayPreviousTimes()
     {
-        // 1  Collects existing times using the LoadPreviousTimes() method. 
         var times = LoadPreviousTimes();
+        var levelName = Path.GetFileName(selectedLevel);
+        if (levelName != null)
+        {
+            levelName = levelName.Replace(".json", "");
+        }
         var topThree = times.OrderBy(time => time.time).Take(3);
-        // 2  Finds the PreviousTimes text component 
         var timesLabel = GameObject.Find("PreviousTimes").GetComponent<Text>();
-        // 3    Changes it to show each time found
-        timesLabel.text = "BEST TIMES \n";
+        timesLabel.text = levelName + "\n"; timesLabel.text += "BEST TIMES \n";
         foreach (var time in topThree)
         {
-            timesLabel.text += time.entryDate.ToShortDateString() +": " + time.time + "\n";
+            timesLabel.text += time.entryDate.ToShortDateString() + ": " + time.time + "\n";
         }
     }
 
