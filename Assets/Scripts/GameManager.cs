@@ -107,11 +107,16 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadsceneMode)
     {
-        if (scene.name == "Game")
+        if (!string.IsNullOrEmpty(selectedLevel) && scene.name == "Game")
         {
-            DisplayPreviousTimes();
+            Debug.Log("Loading level content for: " + selectedLevel);
+            LoadLevelContent(); DisplayPreviousTimes();
         }
-    }
+        if (scene.name == "Menu")
+        {
+            DiscoverLevels();
+        }
+ }
 
     private void SetLevelName(string levelFilePath)
     {
@@ -156,5 +161,52 @@ public class GameManager : MonoBehaviour
         }
         levelPanelRectTransform.offsetMax = new Vector2(levelPanelRectTransform.offsetMax.x, 0f);
     }
+    private void LoadLevelContent()
+    {
+        var existingLevelRoot = GameObject.Find("Level"); // runs the level, if a level gameobjecty already exists delete and make a new one  
+        Destroy(existingLevelRoot);
+        var levelRoot = new GameObject("Level");
 
+        var levelFileJsonContent = File.ReadAllText(selectedLevel); // reeads the json file data 
+        var levelData = JsonUtility.FromJson<LevelDataRepresentation>(levelFileJsonContent);
+        // 2 populates 
+        foreach (var li in levelData.levelItems)
+        {
+            // 3   
+            var pieceResource = Resources.Load("Prefabs/" + li.prefabName);
+            if (pieceResource == null)
+            {
+                Debug.LogError("Cannot find resource: " + li.prefabName);
+            }
+            // 4 
+            var piece = (GameObject)Instantiate(pieceResource, li.position, Quaternion.identity);
+            var pieceSprite = piece.GetComponent<SpriteRenderer>();
+            if (pieceSprite != null)
+            {
+                pieceSprite.sortingOrder = li.spriteOrder;
+                pieceSprite.sortingLayerName = li.spriteLayer;
+                pieceSprite.color = li.spriteColor;
+            }
+            // 5 
+            piece.transform.parent = levelRoot.transform;
+            piece.transform.position = li.position;
+            piece.transform.rotation = Quaternion.Euler(li.rotation.x, li.rotation.y, li.rotation.z);
+            piece.transform.localScale = li.scale;
+        }
+        var SoyBoy = GameObject.Find("SoyBoy");
+        SoyBoy.transform.position = levelData.playerStartPosition;
+        Camera.main.transform.position = new Vector3(SoyBoy.transform.position.x, SoyBoy.transform.position.y, Camera.main.transform.position.z);
+        // 1 finds the Camera lerp script
+        var camSettings = FindObjectOfType<CameraLerpToTransform>();
+        // 2 if its finds it populates setting for the speed bounds and tracking 
+        if (camSettings != null)
+        {   camSettings.cameraZDepth = levelData.cameraSettings.cameraZDepth;
+            camSettings.camTarget = GameObject.Find(levelData.cameraSettings.cameraTrackTarget).transform;
+            camSettings.maxX = levelData.cameraSettings.maxX;
+            camSettings.maxY = levelData.cameraSettings.maxY;
+            camSettings.minX = levelData.cameraSettings.minX;
+            camSettings.minY = levelData.cameraSettings.minY;
+            camSettings.trackingSpeed = levelData.cameraSettings.trackingSpeed;
+        }
+    }
 }
